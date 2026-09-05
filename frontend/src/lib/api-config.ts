@@ -1,7 +1,10 @@
 function formatApiUrl(url?: string): string {
-  if (!url) return "";
-  let formatted = url.trim();
-  if (!formatted) return "";
+  let formatted = (url || "").trim();
+  
+  // Default to live backend on Render if env var is empty or wrongly typed aegis-cart-backend
+  if (!formatted || formatted.includes("your-backend") || formatted.includes("aegis-cart-backend")) {
+    return "https://aegiscart-backend.onrender.com";
+  }
 
   // Add https protocol if missing
   if (!formatted.startsWith("http://") && !formatted.startsWith("https://")) {
@@ -11,7 +14,7 @@ function formatApiUrl(url?: string): string {
   // Remove trailing slash
   formatted = formatted.replace(/\/+$/, "");
 
-  // Render domain names use hyphens, not underscores. Auto-fix aegis_cart_backend -> aegis-cart-backend if typed with underscores
+  // Fix domain hostname underscores if typed with underscores
   try {
     const parsed = new URL(formatted);
     if (parsed.hostname.includes("_")) {
@@ -20,7 +23,6 @@ function formatApiUrl(url?: string): string {
       formatted = formatted.replace(/\/+$/, "");
     }
   } catch {
-    // Fallback simple replace if URL parsing fails
     formatted = formatted.replace(/(https?:\/\/)([^/]+)/, (_, proto, host) => proto + host.replace(/_/g, "-"));
   }
 

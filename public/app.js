@@ -12,7 +12,10 @@
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function getApiBase() {
-    let base = window.NEXT_PUBLIC_API_URL || window.NEXT_PUBLIC_API_BASE_URL || window.API_BASE_URL || "https://aegis-cart-backend.onrender.com";
+    let base = window.NEXT_PUBLIC_API_URL || window.NEXT_PUBLIC_API_BASE_URL || window.API_BASE_URL || "";
+    if (!base || base.includes("your-backend") || base.includes("aegis-cart-backend")) {
+      base = "https://aegiscart-backend.onrender.com";
+    }
     if (base && typeof base === "string") {
       base = base.trim();
       if (base.includes("_") && base.includes(".onrender.com")) {
