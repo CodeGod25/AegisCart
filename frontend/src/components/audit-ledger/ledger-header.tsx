@@ -118,11 +118,7 @@ export default function LedgerHeader({
                     <button
                       key={value}
                       onClick={() => {
-                        const next = ["all", "lastHour", "lastDay", "lastWeek"][
-                          (["all", "lastHour", "lastDay", "lastWeek"].indexOf(value as "all" | "lastHour" | "lastDay" | "lastWeek") + 1) %
-                            4
-                        ];
-                        onTimeRangeChange(next as "all" | "lastHour" | "lastDay" | "lastWeek");
+                        onTimeRangeChange(value as "all" | "lastHour" | "lastDay" | "lastWeek");
                         setTimeRangeOpen(false);
                       }}
                       className={`flex w-full items-center px-3 py-2 text-left text-xs font-medium ${timeRange === value ? "text-brand bg-brand/10" : "text-ink-2 hover:bg-surface/50"}`}

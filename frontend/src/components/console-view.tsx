@@ -218,9 +218,9 @@ export default function ConsoleView({ onBack }: ConsoleViewProps) {
       </div>
 
       <div className="flex-1 flex overflow-hidden">
-        {activePanel === 'theater' && <div className="flex-1 min-w-0"><AgentTheater /></div>}
-        {activePanel === 'ledger' && <div className="flex-1 min-w-0"><AuditLedger /></div>}
-        {activePanel === 'operations' && <div className="flex-1 min-w-0"><OperationsRail /></div>}
+        <div className={cn("flex-1 min-w-0 h-full", activePanel !== 'theater' && "hidden")}><AgentTheater /></div>
+        <div className={cn("flex-1 min-w-0 h-full", activePanel !== 'ledger' && "hidden")}><AuditLedger /></div>
+        <div className={cn("flex-1 min-w-0 h-full", activePanel !== 'operations' && "hidden")}><OperationsRail /></div>
       </div>
 
     </div>

@@ -34,6 +34,7 @@ export function useLedger() {
         (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
       );
     },
+    staleTime: 30000, // Prevent background refetches from overwriting live SSE events
   });
 
   // Mutation for clearing the ledger
@@ -70,13 +71,15 @@ export function useLedger() {
           const res = await fetch(`${API_BASE_URL}/ledger/events`);
           if (res.ok) {
             const data = await res.json();
+            const newEvents = Array.isArray(data.events) ? data.events : (Array.isArray(data) ? data : []);
             setEvents((prev) => {
-              const current = prev ?? [];
-              const newEvents = Array.isArray(data.events) ? data.events : (Array.isArray(data) ? data : []);
+              const current = prev ?? queryClient.getQueryData<LedgerEvent[]>(["ledger-events"]) ?? [];
               // Merge new events with existing, avoiding duplicates by id
               const merged = [...newEvents, ...current.filter((e) => !newEvents.some((ne: LedgerEvent) => ne.id === e.id))];
               // Sort by timestamp descending (newest first)
-              return merged.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+              const sorted = merged.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+              queryClient.setQueryData(["ledger-events"], sorted);
+              return sorted;
             });
           }
         } catch (err) {
@@ -98,7 +101,7 @@ export function useLedger() {
 
     eventSource.onerror = () => {
       setIsConnected(false);
-      // We don't close the connection here because the browser will retry automatically
+      // Browser automatically retries EventSource connections
     };
 
     eventSource.addEventListener("snapshot", (e) => {
@@ -112,6 +115,7 @@ export function useLedger() {
           (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
         );
         setEvents(sorted);
+        queryClient.setQueryData(["ledger-events"], sorted);
       } catch (err) {
         console.error("Error parsing ledger snapshot:", err);
       }
@@ -124,7 +128,9 @@ export function useLedger() {
           // Avoid duplicates
           const current = prev ?? queryClient.getQueryData<LedgerEvent[]>(["ledger-events"]) ?? [];
           if (current.some((e) => e.id === event.id)) return current;
-          return [event, ...current]; // Prepend new event
+          const next = [event, ...current];
+          queryClient.setQueryData(["ledger-events"], next);
+          return next;
         });
       } catch (err) {
         console.error("Error parsing ledger append:", err);
@@ -142,8 +148,10 @@ export function useLedger() {
     clearLedgerMutation.mutate();
   };
 
+  const activeEvents = events ?? snapshotData ?? [];
+
   return {
-    events: events ?? snapshotData ?? [],
+    events: activeEvents,
     isLoading: isSnapshotLoading && events === null,
     error: snapshotError,
     isConnected,
