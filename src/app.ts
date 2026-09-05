@@ -38,7 +38,6 @@ app.use(
 );
 
 // Request logging - log all requests
-app.use(requestLogger);
 
 // Rate limiting - protect endpoints
 app.use("/webhooks", strictLimiter); // Webhooks are critical
@@ -55,6 +54,7 @@ app.use(lenientLimiter); // Lenient limit for public endpoints
 app.use("/webhooks", express.raw({ type: "application/json" }), webhookRouter);
 app.use(express.json());
 app.use(express.static(path.join(process.cwd(), "public")));
+app.use(requestLogger);
 
 // Metrics collection - after routes but before error handling
 app.use(metricsMiddleware);

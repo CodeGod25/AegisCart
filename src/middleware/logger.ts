@@ -38,7 +38,7 @@ export function requestLogger(
       req.path.startsWith(path)
     );
 
-    if (!isSensitive && Object.keys(req.body).length > 0) {
+    if (!isSensitive && req.body && Object.keys(req.body).length > 0) {
       // Log truncated body to avoid excessive logging
       const bodyLength = JSON.stringify(req.body).length;
       if (bodyLength < 1000) {
