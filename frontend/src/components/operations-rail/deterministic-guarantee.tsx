@@ -1,5 +1,6 @@
 import { formatINR } from "@/lib/format";
 import { Check, Shield, Users, List, Clock, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 // Mock merchant policy for demo purposes
 // In a real app, this would come from the backend or a shared data source
@@ -8,9 +9,9 @@ const merchantPolicy = {
   minMarginPct: 20,
 };
 
-export default function DeterministicGuarantee() {
+export default function DeterministicGuarantee({ className }: { className?: string }) {
   return (
-    <div className="bg-surface/50 p-6 rounded-xl border border-line/20 shadow-sm">
+    <div className={cn("bg-surface/50 p-6 rounded-xl border border-line/20 shadow-sm", className)}>
       <div className="flex justify-between items-start mb-4">
         <h3 className="text-lg font-semibold text-ink">Deterministic Guarantees</h3>
         <div className="flex items-center gap-2 text-sm text-ink-2">

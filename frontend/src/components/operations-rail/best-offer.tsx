@@ -20,7 +20,7 @@ const BestOfferSchema = z.object({
 
 type BestOffer = z.infer<typeof BestOfferSchema>;
 
-export default function BestOffer() {
+export default function BestOffer({ className }: { className?: string }) {
   const { data: bestOfferData, isLoading, error, refetch } = useQuery({
     queryKey: ["best-offer"],
     queryFn: async () => {
@@ -38,7 +38,7 @@ export default function BestOffer() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-ink-3">
+      <div className={cn("flex flex-col items-center justify-center h-full text-ink-3", className)}>
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand/10 text-brand mb-4">
           <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3"></path>
@@ -50,12 +50,12 @@ export default function BestOffer() {
   }
 
   if (error) {
-    return <div role="alert" className="panel-feedback"><p>Best offer data could not be loaded.</p><button onClick={() => refetch()}>Retry</button></div>;
+    return <div role="alert" className={cn("panel-feedback", className)}><p>Best offer data could not be loaded.</p><button onClick={() => refetch()}>Retry</button></div>;
   }
 
   if (!bestOfferData || !bestOfferData.ok) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-ink-3">
+      <div className={cn("flex flex-col items-center justify-center h-full text-ink-3", className)}>
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand/10 text-brand mb-4">
           <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M5 19l14-7-3-17"></path>
@@ -68,7 +68,7 @@ export default function BestOffer() {
 
   if (!bestOfferData.name || bestOfferData.lineTotalInPaise === undefined) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-ink-3">
+      <div className={cn("flex flex-col items-center justify-center h-full text-ink-3", className)}>
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand/10 text-brand mb-4">
           <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M5 19l14-7-3-17"></path>
@@ -80,7 +80,7 @@ export default function BestOffer() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className={cn("space-y-6", className)}>
       {/* Best Offer Summary */}
       <div className="bg-surface/50 p-4 rounded-lg border border-line/20">
         <div className="flex justify-between items-start mb-2">

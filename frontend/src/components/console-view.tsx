@@ -5,7 +5,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import AgentTheater from "@/components/agent-theater";
 import AuditLedger from "@/components/audit-ledger";
 import OperationsRail from "@/components/operations-rail";
-import { RotateCcw, SunMoon, CircleHelp } from "lucide-react";
+import { RotateCcw, SunMoon, CircleHelp, Shield } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ConsoleViewProps {
   onBack: () => void;

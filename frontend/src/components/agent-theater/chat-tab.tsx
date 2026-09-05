@@ -20,7 +20,7 @@ export default function ChatTab() {
   };
 
   // Expose LLM usage status to parent components via context
-  const { setLLMUsed, llmUsedCount } = useLLMStatus();
+  const { setLLMUsed } = useLLMStatus();
 
   useEffect(() => {
     if (messages.length > 0) {

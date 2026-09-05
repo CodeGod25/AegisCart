@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { SimulationFailureType } from "@/types/domain";
+import { cn } from "@/lib/utils";
 
-export default function SimulationControls() {
+export default function SimulationControls({ className }: { className?: string }) {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [simulationState, setSimulationState] = useState<{
     failNextPayment: string | null;
@@ -114,7 +114,7 @@ export default function SimulationControls() {
   // loadSimulationState();
 
   return (
-    <div className="space-y-6">
+    <div className={cn("space-y-6", className)}>
       {/* Simulation State Display */}
       <div className="bg-surface/50 p-4 rounded-lg border border-line/20">
         <div className="flex justify-between items-start mb-2">
@@ -148,7 +148,7 @@ export default function SimulationControls() {
         <div className="space-y-3">
           <Button
             onClick={handleSimulatePaymentDecline}
-            variant="destructive"
+            variant="outline"
             className="w-full"
           >
             💥 Simulate Payment Decline
@@ -162,7 +162,7 @@ export default function SimulationControls() {
           </Button>
           <Button
             onClick={handleSimulateReset}
-            variant="secondary"
+            variant="ghost"
             className="w-full"
           >
             🔄 Reset Simulation

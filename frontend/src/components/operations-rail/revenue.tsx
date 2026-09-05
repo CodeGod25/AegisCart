@@ -1,4 +1,5 @@
 import { formatINR } from "@/lib/format";
+import { cn } from "@/lib/utils";
 
 interface RevenueProps {
   agentRevenuePercentage?: number;
@@ -57,9 +58,10 @@ export default function Revenue({
   perSku = [],
   sales = defaultSales,
   moneyFlowChartRef,
-}: RevenueProps) {
+  className,
+}: RevenueProps & { className?: string }) {
   return (
-    <div className="space-y-6">
+    <div className={cn("space-y-6", className)}>
       {/* NEW AGENT PERFORMANCE METRICS */}
       <div className="bg-surface/50 p-4 rounded-lg border border-line/20">
         <div className="flex justify-between items-start mb-2">
