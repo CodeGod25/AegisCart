@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { formatINR } from "@/lib/format";
 import { Chip } from "@/components/ui/chip";
 import { Button } from "@/components/ui/button";
+import { API_BASE_URL } from "@/lib/api-config";
 import { z } from "zod";
 
 // Define the shape of an approval (based on the backend)
@@ -31,7 +32,7 @@ export default function Approvals() {
   const { data: approvalsData, isLoading: isFetching, error: fetchError } = useQuery({
     queryKey: ["approvals"],
     queryFn: async () => {
-      const res = await fetch("/approvals?status=PENDING");
+      const res = await fetch(`${API_BASE_URL}/approvals?status=PENDING`);
       if (!res.ok) throw new Error("Failed to fetch approvals");
       const data = await res.json();
       return z.array(ApprovalSchema).parse(data.approvals || []);
@@ -41,7 +42,7 @@ export default function Approvals() {
   // Mutation for approving an approval
   const approveMutation = useMutation({
     mutationFn: async (approvalId: string) => {
-      const res = await fetch(`/approvals/${encodeURIComponent(approvalId)}/approve`, {
+      const res = await fetch(`${API_BASE_URL}/approvals/${encodeURIComponent(approvalId)}/approve`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +60,7 @@ export default function Approvals() {
   // Mutation for rejecting an approval
   const rejectMutation = useMutation({
     mutationFn: async (approvalId: string) => {
-      const res = await fetch(`/approvals/${encodeURIComponent(approvalId)}/reject`, {
+      const res = await fetch(`${API_BASE_URL}/approvals/${encodeURIComponent(approvalId)}/reject`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

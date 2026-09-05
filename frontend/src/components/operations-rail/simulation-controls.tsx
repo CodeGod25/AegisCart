@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { API_BASE_URL } from "@/lib/api-config";
 
 export default function SimulationControls({ className }: { className?: string }) {
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -13,7 +14,7 @@ export default function SimulationControls({ className }: { className?: string }
   // Fetch initial simulation state
   async function loadSimulationState() {
     try {
-      const res = await fetch("/simulation/state");
+      const res = await fetch(`${API_BASE_URL}/simulation/state`);
       if (res.ok) {
         const data = await res.json();
         setSimulationState(data);
@@ -25,7 +26,7 @@ export default function SimulationControls({ className }: { className?: string }
 
   const simulatePaymentDeclineMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch("/simulate/failure", {
+      const res = await fetch(`${API_BASE_URL}/simulate/failure`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +50,7 @@ export default function SimulationControls({ className }: { className?: string }
 
   const simulateLlmOutageMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch("/simulate/llm", {
+      const res = await fetch(`${API_BASE_URL}/simulate/llm`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +74,7 @@ export default function SimulationControls({ className }: { className?: string }
 
   const simulateResetMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch("/simulate/reset", {
+      const res = await fetch(`${API_BASE_URL}/simulate/reset`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

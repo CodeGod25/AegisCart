@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { formatINR } from "@/lib/format";
+import { API_BASE_URL } from "@/lib/api-config";
 import { z } from "zod";
 
 // Define the shape of the best offer response
@@ -24,12 +25,12 @@ export default function BestOffer({ className }: { className?: string }) {
   const { data: bestOfferData, isLoading, error, refetch } = useQuery({
     queryKey: ["best-offer"],
     queryFn: async () => {
-      const catalogResponse = await fetch("/catalog/items");
+      const catalogResponse = await fetch(`${API_BASE_URL}/catalog/items`);
       if (!catalogResponse.ok) throw new Error("Failed to fetch catalog");
       const catalog = await catalogResponse.json() as Array<{ sku?: string }>;
       const sku = catalog[0]?.sku;
       if (!sku) return { ok: false };
-      const res = await fetch(`/revenue/best-offer?sku=${encodeURIComponent(sku)}`);
+      const res = await fetch(`${API_BASE_URL}/revenue/best-offer?sku=${encodeURIComponent(sku)}`);
       if (!res.ok) throw new Error("Failed to fetch best offer");
       const data = await res.json();
       return BestOfferSchema.parse(data);

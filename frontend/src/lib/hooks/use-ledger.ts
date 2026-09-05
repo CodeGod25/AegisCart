@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { API_BASE_URL } from "@/lib/api-config";
 import { z } from "zod";
 
 // Define the shape of a ledger event (based on the backend)
@@ -25,7 +26,7 @@ export function useLedger() {
   const { data: snapshotData, isLoading: isSnapshotLoading, error: snapshotError } = useQuery({
     queryKey: ["ledger-events"],
     queryFn: async () => {
-      const res = await fetch("/ledger/events");
+      const res = await fetch(`${API_BASE_URL}/ledger/events`);
       if (!res.ok) throw new Error("Failed to fetch ledger events");
       const data = await res.json();
       return data.events || [];
@@ -35,7 +36,7 @@ export function useLedger() {
   // Mutation for clearing the ledger
   const clearLedgerMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch("/ledger/events", {
+      const res = await fetch(`${API_BASE_URL}/ledger/events`, {
         method: "DELETE",
       });
       if (!res.ok) {
@@ -59,7 +60,7 @@ export function useLedger() {
       console.warn("EventSource not supported, falling back to polling");
       const pollInterval = setInterval(async () => {
         try {
-          const res = await fetch("/ledger/events");
+          const res = await fetch(`${API_BASE_URL}/ledger/events`);
           if (res.ok) {
             const data = await res.json();
             setEvents((prev) => {
@@ -82,7 +83,7 @@ export function useLedger() {
       };
     }
 
-    const eventSource = new EventSource("/ledger/stream");
+    const eventSource = new EventSource(`${API_BASE_URL}/ledger/stream`);
 
     eventSource.onopen = () => {
       setIsConnected(true);

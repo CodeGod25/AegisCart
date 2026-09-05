@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { formatINR } from "@/lib/format";
+import { API_BASE_URL } from "@/lib/api-config";
 import Gauge from "./gauge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { z } from "zod";
@@ -24,7 +25,7 @@ export default function PolicyGauges() {
   const { data: capabilities, isLoading, error, refetch } = useQuery({
     queryKey: ["policy-envelope"],
     queryFn: async () => {
-      const res = await fetch("/catalog/capabilities");
+      const res = await fetch(`${API_BASE_URL}/catalog/capabilities`);
       if (!res.ok) throw new Error("Failed to fetch policy envelope");
       const data = await res.json();
       return data;

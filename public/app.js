@@ -11,6 +11,9 @@
   const reduceMotion =
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // ADD THIS — set your Render backend URL here
+  const API_BASE = "https://your-backend.onrender.com";
+
   // ------------------------------------------------------------------ utils
   function esc(s) {
     return String(s == null ? "" : s).replace(
@@ -52,7 +55,8 @@
   }
 
   async function api(path, options) {
-    const res = await fetch(path, options);
+    const url = path.startsWith("http") ? path : API_BASE + path;
+    const res = await fetch(url, options);
     const text = await res.text();
     let body = {};
     if (text) body = safeParse(text, { raw: text });
@@ -307,7 +311,7 @@
     }
     let es;
     try {
-      es = new EventSource("/ledger/stream");
+      es = new EventSource(`${API_BASE}/ledger/stream`);
     } catch {
       startPolling();
       return;

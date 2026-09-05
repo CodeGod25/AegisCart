@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
+import { API_BASE_URL } from "@/lib/api-config";
 
 export default function A2ATab() {
   const [logs, setLogs] = useState<string[]>([]);
@@ -9,7 +10,7 @@ export default function A2ATab() {
   const { data: status, isLoading, refetch: refetchStatus } = useQuery({
     queryKey: ["buyer-status"],
     queryFn: async () => {
-      const res = await fetch("/buyer/status");
+      const res = await fetch(`${API_BASE_URL}/buyer/status`);
       if (!res.ok) throw new Error("Failed to fetch buyer status");
       return res.json();
     },
@@ -32,7 +33,7 @@ export default function A2ATab() {
     addLog("Starting buyer agent...");
 
     try {
-      const res = await fetch("/buyer/run", {
+      const res = await fetch(`${API_BASE_URL}/buyer/run`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +62,7 @@ export default function A2ATab() {
     addLog("Stopping buyer agent...");
 
     try {
-      const res = await fetch("/buyer/stop", {
+      const res = await fetch(`${API_BASE_URL}/buyer/stop`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

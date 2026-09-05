@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { API_BASE_URL } from "@/lib/api-config";
 import { z } from "zod";
 
 // Define the shape of a turn from the agent
@@ -73,7 +74,7 @@ export function useChat() {
     queryKey: ["chat-history", chatSession],
     queryFn: async () => {
       if (!chatSession) return [];
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/agent/history?sessionId=${encodeURIComponent(chatSession)}`);
+      const res = await fetch(`${API_BASE_URL}/agent/history?sessionId=${encodeURIComponent(chatSession)}`);
       if (!res.ok) throw new Error("Failed to fetch chat history");
       const data = await res.json();
       // The API returns { sessionId, messages }
@@ -85,7 +86,7 @@ export function useChat() {
   // Mutation for sending a message
   const sendMessageMutation = useMutation({
     mutationFn: async (message: string) => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/agent/message`, {
+      const res = await fetch(`${API_BASE_URL}/agent/message`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

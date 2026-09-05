@@ -7,6 +7,7 @@ import AuditLedger from "@/components/audit-ledger";
 import OperationsRail from "@/components/operations-rail";
 import { RotateCcw, SunMoon, CircleHelp, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { API_BASE_URL } from "@/lib/api-config";
 
 interface ConsoleViewProps {
   onBack: () => void;
@@ -68,7 +69,7 @@ export default function ConsoleView({ onBack }: ConsoleViewProps) {
               aria-label="Reset demo"
               title="Reset demo"
               onClick={async () => {
-                const response = await fetch("/demo/reset", { method: "POST" });
+                const response = await fetch(`${API_BASE_URL}/demo/reset`, { method: "POST" });
                 if (response.ok) {
                   await queryClient.invalidateQueries();
                 }
