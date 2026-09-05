@@ -8,24 +8,29 @@ export const simulationRouter = Router();
 // The failures an operator can arm on the next payment attempt (see failureTaxonomy).
 const PAYMENT_FAILURES = ["PAYMENT_DECLINED", "GATEWAY_TIMEOUT", "INSUFFICIENT_STOCK"] as const;
 
-const failureSchema = z.object({
-  type: z.enum(PAYMENT_FAILURES),
-});
+function normalizeFailureType(raw?: unknown): typeof PAYMENT_FAILURES[number] | null {
+  if (typeof raw !== "string" || !raw) return null;
+  const s = raw.toUpperCase().trim();
+  if (s === "PAYMENT_DECLINE" || s === "PAYMENT_DECLINED") return "PAYMENT_DECLINED";
+  if (s === "GATEWAY_TIMEOUT") return "GATEWAY_TIMEOUT";
+  if (s === "INSUFFICIENT_STOCK") return "INSUFFICIENT_STOCK";
+  return null;
+}
 
 simulationRouter.post("/failure", (req, res) => {
-  const parse = failureSchema.safeParse(req.body);
+  const type = normalizeFailureType(req.body && req.body.type);
 
-  if (!parse.success) {
+  if (!type) {
     return res.status(400).json({
       error: "INVALID_FAILURE_TYPE",
       supported: PAYMENT_FAILURES,
     });
   }
 
-  simulationService.setFailNextPayment(parse.data.type);
+  simulationService.setFailNextPayment(type);
   return res.status(200).json({
     ok: true,
-    message: `Failure armed: the next payment attempt will fail as ${parse.data.type}, then recover gracefully.`,
+    message: `Failure armed: the next payment attempt will fail as ${type}, then recover gracefully.`,
     state: simulationService.getState(),
   });
 });

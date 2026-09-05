@@ -31,7 +31,7 @@ export default function SimulationControls({ className }: { className?: string }
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ type: "payment_decline" }),
+        body: JSON.stringify({ type: "PAYMENT_DECLINED" }),
       });
       if (!res.ok) {
         const errorData = await res.json();
