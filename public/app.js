@@ -11,8 +11,18 @@
   const reduceMotion =
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // ADD THIS — set your Render backend URL here
-  const API_BASE = "https://your-backend.onrender.com";
+  function getApiBase() {
+    let base = window.NEXT_PUBLIC_API_URL || window.NEXT_PUBLIC_API_BASE_URL || window.API_BASE_URL || "https://aegis-cart-backend.onrender.com";
+    if (base && typeof base === "string") {
+      base = base.trim();
+      if (base.includes("_") && base.includes(".onrender.com")) {
+        base = base.replace(/_/g, "-");
+      }
+      base = base.replace(/\/+$/, "");
+    }
+    return base;
+  }
+  const API_BASE = getApiBase();
 
   // ------------------------------------------------------------------ utils
   function esc(s) {

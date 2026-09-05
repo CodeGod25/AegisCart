@@ -27,7 +27,17 @@ import { metricsMiddleware } from "./metrics";
 
 export const app = express();
 
-// Request logging - should be first to log all requests
+// CORS middleware - must be first to handle preflight OPTIONS requests across origins
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"],
+  })
+);
+
+// Request logging - log all requests
 app.use(requestLogger);
 
 // Rate limiting - protect endpoints
@@ -42,7 +52,6 @@ app.use("/api/", apiLimiter); // General API routes
 app.use(lenientLimiter); // Lenient limit for public endpoints
 
 // Built-in middleware
-app.use(cors());
 app.use("/webhooks", express.raw({ type: "application/json" }), webhookRouter);
 app.use(express.json());
 app.use(express.static(path.join(process.cwd(), "public")));
