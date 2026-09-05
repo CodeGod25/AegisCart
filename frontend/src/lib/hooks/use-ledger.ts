@@ -29,7 +29,10 @@ export function useLedger() {
       const res = await fetch(`${API_BASE_URL}/ledger/events`);
       if (!res.ok) throw new Error("Failed to fetch ledger events");
       const data = await res.json();
-      return data.events || [];
+      const rawEvents = Array.isArray(data.events) ? data.events : (Array.isArray(data) ? data : []);
+      return (rawEvents as LedgerEvent[]).slice().sort(
+        (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+      );
     },
   });
 
@@ -46,13 +49,17 @@ export function useLedger() {
     },
     onSuccess: () => {
       setEvents([]);
+      queryClient.setQueryData(["ledger-events"], []);
       queryClient.invalidateQueries({ queryKey: ["ledger-events"] });
     },
   });
 
   // Set up EventSource for real-time updates
   useEffect(() => {
-    const reset = () => setEvents([]);
+    const reset = () => {
+      setEvents([]);
+      queryClient.setQueryData(["ledger-events"], []);
+    };
     window.addEventListener("aegis-demo-reset", reset);
 
     if (typeof EventSource === "undefined") {
@@ -65,7 +72,7 @@ export function useLedger() {
             const data = await res.json();
             setEvents((prev) => {
               const current = prev ?? [];
-              const newEvents = data.events || [];
+              const newEvents = Array.isArray(data.events) ? data.events : (Array.isArray(data) ? data : []);
               // Merge new events with existing, avoiding duplicates by id
               const merged = [...newEvents, ...current.filter((e) => !newEvents.some((ne: LedgerEvent) => ne.id === e.id))];
               // Sort by timestamp descending (newest first)
@@ -92,13 +99,19 @@ export function useLedger() {
     eventSource.onerror = () => {
       setIsConnected(false);
       // We don't close the connection here because the browser will retry automatically
-      // If we want to implement a retry mechanism, we would close and reconnect after a delay
     };
 
     eventSource.addEventListener("snapshot", (e) => {
       try {
         const snapshot = JSON.parse(e.data);
-        setEvents(snapshot.events || []);
+        const list: LedgerEvent[] = Array.isArray(snapshot)
+          ? snapshot
+          : (Array.isArray(snapshot?.events) ? snapshot.events : []);
+        // Sort descending (newest first)
+        const sorted = list.slice().sort(
+          (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
+        setEvents(sorted);
       } catch (err) {
         console.error("Error parsing ledger snapshot:", err);
       }
@@ -109,7 +122,7 @@ export function useLedger() {
         const event = JSON.parse(e.data);
         setEvents((prev) => {
           // Avoid duplicates
-          const current = prev ?? [];
+          const current = prev ?? queryClient.getQueryData<LedgerEvent[]>(["ledger-events"]) ?? [];
           if (current.some((e) => e.id === event.id)) return current;
           return [event, ...current]; // Prepend new event
         });
@@ -123,7 +136,7 @@ export function useLedger() {
       eventSource.close();
       window.removeEventListener("aegis-demo-reset", reset);
     };
-  }, []); // Empty deps to run only once
+  }, [queryClient]);
 
   const clearLedger = () => {
     clearLedgerMutation.mutate();
@@ -131,7 +144,7 @@ export function useLedger() {
 
   return {
     events: events ?? snapshotData ?? [],
-    isLoading: isSnapshotLoading,
+    isLoading: isSnapshotLoading && events === null,
     error: snapshotError,
     isConnected,
     clearLedger,

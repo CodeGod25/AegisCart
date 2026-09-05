@@ -1,4 +1,5 @@
 import { getDb } from "../db/client";
+import { cacheService } from "./cacheService";
 
 export async function resetDemoData(): Promise<void> {
   const db = await getDb();
@@ -14,6 +15,7 @@ export async function resetDemoData(): Promise<void> {
       DELETE FROM idempotency_keys;
     `);
     await db.exec("COMMIT");
+    cacheService.clearQueryCache("ledger_list_");
   } catch (error) {
     await db.exec("ROLLBACK");
     throw error;

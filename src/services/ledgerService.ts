@@ -44,6 +44,9 @@ class LedgerService {
       ]
     );
 
+    // Invalidate ledger query cache so immediate reads reflect the write
+    cacheService.clearQueryCache("ledger_list_");
+
     // Notify open SSE listeners. Best-effort: a listener error must never break the
     // write path, since the durable insert above has already succeeded.
     try {
