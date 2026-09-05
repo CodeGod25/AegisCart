@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    image: ${IMAGE_NAME:-aegiscart}:${IMAGE_TAG:-latest}
+    build: .
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env.development   # Use .env.development for local development
+      # Override with .env if it exists (for local overrides)
+      - .env
+    volumes:
+      - ./data:/app/data   # Persist the SQLite database
+      - ./logs:/app/logs   # If you have logs
+    restart: unless-stopped
+
+  # Optional: Add a service for running tests in a container
+  test:
+    image: ${IMAGE_NAME:-aegiscart}:${IMAGE_TAG:-latest}
+    build: .
+    command: npm test
+    env_file:
+      - .env.development
+      - .env
+    volumes:
+      - ./data:/app/data
+    # No need to expose ports for test service

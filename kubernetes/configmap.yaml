@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aegiscart-config
+data:
+  # Non-sensitive configuration
+  PORT: "4000"
+  RAZORPAY_API_BASE: "https://api.razorpay.com/v1"
+  SQLITE_DB_PATH: "/app/data/aegiscart.db"
+  LLM_PROVIDER: "mock"
+  LLM_MODEL: "gpt-4o-mini"
+  LLM_TIMEOUT_MS: "15000"
+  # Feature flags can be set here or via environment variables
+  # FEATURE_ENABLE_NEW_DASHBOARD: "false"
+  # FEATURE_ENABLE_EXPERIMENTAL_ENDPOINT: "false"
+  # FEATURE_ENABLE_AGENT_UI_ENHANCEMENTS: "false"

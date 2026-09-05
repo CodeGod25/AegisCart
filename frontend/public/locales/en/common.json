@@ -1,0 +1,360 @@
+{
+  "layout": {
+    "title": "AegisCart - Agentic Commerce Control Console",
+    "description": "Policy-first agentic commerce gateway for Razorpay test mode"
+  },
+  "landingPage": {
+    "header": {
+      "brand": "AegisCart",
+      "title": "AegisCart",
+      "tagline": "Policy-first agentic commerce",
+      "nav": {
+        "features": "Features",
+        "docs": "Docs",
+        "pricing": "Pricing"
+      },
+      "cta": "Get Started"
+    },
+    "hero": {
+      "eyebrow": "TRUST LAYER FOR AGENTIC COMMERCE",
+      "titleBefore": "Turn AI Agents into",
+      "titleHighlight": "Trusted Customers",
+      "description": "AegisCart provides the deterministic trust layer for profitable agent-to-agent commerce. Every money decision is handled by policy, not AI—enabling safe, explainable transactions between autonomous buyers and merchants.",
+      "buttons": {
+        "demo": "See the Demo",
+        "docs": "View Documentation"
+      },
+      "trustList": {
+        "deterministicPricing": "Deterministic Pricing",
+        "cryptographicallySecure": "Cryptographically Secure",
+        "humanInTheLoop": "Human-in-the-Loop"
+      }
+    },
+    "howItWorks": {
+      "title": "How AegisCart Works",
+      "process": [
+        {
+          "title": "AI Handles Conversation",
+          "description": "Natural language processing understands customer intent and negotiates terms—but ONLY for discussion, never for money decisions."
+        },
+        {
+          "title": "Policy Engine Enforces Rules",
+          "description": "Deterministic controls enforce discount caps, minimum margins, quantity limits and approval thresholds."
+        },
+        {
+          "title": "Human Approval When Needed",
+          "description": "Risky transactions are held for explicit review—no automatic overrides. High-value orders require merchant consent."
+        }
+      ]
+    },
+    "valueSection": {
+      "title": "Why Merchants Choose AegisCart",
+      "cta": "Experience the Console",
+      "values": [
+        {
+          "title": "Increase Revenue Safely",
+          "description": "Enable AI-driven sales conversations while protecting your margins with automated policy enforcement."
+        },
+        {
+          "title": "Eliminate Fraud & Abuse",
+          "description": "Cryptographically signed offers prevent tampering and replay attacks. Every transaction is traceable and verifiable."
+        },
+        {
+          "title": "Meet Compliance Requirements",
+          "description": "Automated audit trails with explainable decisions satisfy regulatory requirements for AI governance and financial controls."
+        },
+        {
+          "title": "Human-in-the-Loop Control",
+          "description": "Configurable approval workflows ensure high-risk transactions get human review before funds are transferred."
+        }
+      ]
+    },
+    "foundations": {
+      "title": "Built on Deterministic Foundations",
+      "items": [
+        {
+          "title": "Mathematical Precision",
+          "description": "Policy, pricing, signatures and idempotency are pure mathematical functions. Zero AI involvement in money decisions."
+        },
+        {
+          "title": "Cryptographic Security",
+          "description": "HMAC-SHA256 signed offers and mandates prevent tampering, replay attacks and unauthorized modifications."
+        },
+        {
+          "title": "Complete Visibility",
+          "description": "An append-only ledger with a live event stream provides real-time auditability of every transaction and decision."
+        },
+        {
+          "title": "Explainable AI",
+          "description": "The LLM only touches language. It never decides a number that touches money; every action has a traceable reason code."
+        }
+      ]
+    },
+    "cta": {
+      "title": "See a Protected Transaction in Action",
+      "description": "Open the console to follow a buyer request from conversation to policy check, signed offer, payment, and audit record.",
+      "buttons": {
+        "trial": "Open the Console",
+        "sales": "Review the Guarantees"
+      }
+    },
+    "footer": {
+      "company": {
+        "name": "AegisCart",
+        "tagline": "Policy-first agentic commerce for Razorpay",
+        "description": "Built for the Razorpay Buildathon · Track 01 — AI Growth & Agentic Commerce"
+      },
+      "links": {
+        "product": "Product",
+        "company": "Company",
+        "resources": "Resources",
+        "legal": "Legal"
+      },
+      "menu": {
+        "product": {
+          "features": "Features",
+          "pricing": "Pricing",
+          "demo": "Demo"
+        },
+        "company": {
+          "about": "About",
+          "team": "Team",
+          "careers": "Careers"
+        },
+        "resources": {
+          "documentation": "Documentation",
+          "apiReference": "API Reference",
+          "guides": "Guides"
+        },
+        "legal": {
+          "terms": "Terms of Service",
+          "privacy": "Privacy Policy",
+          "compliance": "Compliance"
+        }
+      }
+    }
+  },
+  "console": {
+    "header": {
+      "title": "AegisCart Control Console",
+      "backToOverview": "Back to Overview",
+      "resetDemo": "Reset demo",
+      "toggleTheme": "Toggle theme",
+      "llmStatus": {
+        "checking": "LLM · checking...",
+        "active": "LLM · active",
+        "deterministicFloor": "LLM · deterministic floor"
+      }
+    },
+    "nav": {
+      "agentTheater": "Agent Theater",
+      "auditLedger": "Audit Ledger",
+      "operationsRail": "Operations Rail"
+    },
+    "decisionTrail": {
+      "stages": ["Intent", "Policy", "Approval", "Offer", "Payment", "Ledger"]
+    },
+    "notices": {
+      "demoReset": "Demo reset",
+      "resetFailed": "Reset failed"
+    }
+  },
+  "agentTheater": {
+    "header": {
+      "title": "Terminal",
+      "status": {
+        "merchant": "Merchant",
+        "buyer": "Buyer",
+        "human": "Human",
+        "system": "System"
+      },
+      "tabs": {
+        "chat": "Talk to the merchant agent",
+        "a2a": "A2A · buyer ⇄ merchant"
+      }
+    }
+  },
+  "chatTab": {
+    "error": {
+      "serviceUnavailable": "The agent service is unavailable.",
+      "retry": "Retry"
+    },
+    "emptyState": {
+      "title": "Listening for agent activity...",
+      "description": "Ask for a quote, a payment, or a spend mandate. The agent uses the LLM only for wording — every price and gate is deterministic."
+    },
+    "suggestions": [
+      {
+        "label": "what do you sell?",
+        "action": "What do you sell?"
+      },
+      {
+        "label": "quote 2 keyboards @ 10%",
+        "action": "Quote 2 keyboards at 10% off"
+      },
+      {
+        "label": "push 5 mice @ 30% (trips gate)",
+        "action": "I want 5 mice at 30% off"
+      },
+      {
+        "label": "set a ₹5,000 mandate",
+        "action": "Set a budget of 5000"
+      }
+    ],
+    "composer": {
+      "placeholder": "Type a message..."
+    },
+    "decisionDetails": {
+      "allowed": "ALLOWED",
+      "rejected": "REJECTED",
+      "approvalRequired": "REQUIRED",
+      "risk": "Risk"
+    }
+  },
+  "operationsRail": {
+    "header": {
+      "title": "Operations",
+      "status": "Policy · Approvals · Revenue · More"
+    },
+    "tabs": {
+      "policy": "Policy Envelope",
+      "approvals": "Approvals",
+      "revenue": "Revenue",
+      "more": "More"
+    }
+  },
+  "approvals": {
+    "empty": {
+      "title": "No pending approvals. Risky or high-value orders will surface here for a human decision."
+    },
+    "loading": "Loading approvals...",
+    "error": "Failed to fetch approvals",
+    "buttons": {
+      "approve": "Approve",
+      "reject": "Reject"
+    },
+    "details": {
+      "risk": "risk"
+    }
+  },
+  "revenue": {
+    "loading": {
+      "title": "Loading...",
+      "funnel": "Loading funnel...",
+      "perSku": "Loading per-SKU...",
+      "moneyFlow": "Loading money flow..."
+    },
+    "error": "Revenue metrics could not be loaded.",
+    "noData": {
+      "title": "No metrics data available",
+      "funnel": "No funnel data available",
+      "perSku": "No per-SKU data available",
+      "moneyFlow": "No money flow data available"
+    },
+    "cards": {
+      "revenue": "Revenue",
+      "grossMargin": "Gross margin",
+      "sales": "Sales",
+      "avgOrder": "Avg order",
+      "discountGiven": "Discount given",
+      "effDiscount": "Eff. discount"
+    },
+    "sections": {
+      "funnel": "Funnel",
+      "perSku": "Revenue by SKU",
+      "moneyFlow": "Money Flow Visualization"
+    },
+    "funnelLabels": [
+      "Negotiations",
+      "Offers Minted",
+      "Payment Attempts",
+      "Payments Succeeded"
+    ],
+    "moneyFlow": {
+      "legend": {
+        "cogs": "COGS",
+        "discounts": "Discounts",
+        "grossProfit": "Gross Profit"
+      },
+      "insufficientData": "Insufficient data for money flow visualization."
+    }
+  },
+  "bestOffer": {
+    "loading": "Loading best offer...",
+    "error": "Best offer data could not be loaded.",
+    "noData": {
+      "title": "No best offer data available.",
+      "noBestOffer": "No best offer calculated yet.",
+      "noItems": "No items in this offer."
+    },
+    "summary": {
+      "title": "Best Offer",
+      "totalValue": "Total Value",
+      "margin": "Margin",
+      "discount": "Discount"
+    },
+    "items": "Offer Items"
+  },
+  "simulationControls": {
+    "title": "Simulation Controls",
+    "buttons": {
+      "paymentDecline": "Simulate Payment Decline",
+      "llmOutage": "Simulate LLM Outage",
+      "reset": "Reset Simulation"
+    },
+    "feedback": {
+      "paymentDecline": "Payment decline will be injected into the next payment attempt.",
+      "llmOutage": "LLM outage simulation enabled. The deterministic fallback remains active.",
+      "reset": "All simulations reset.",
+      "confirmReset": "Reset all simulations and return to normal operation?"
+    }
+  },
+  "policyGauges": {
+    "gauges": [
+      {
+        "name": "Discount cap",
+        "num": "{maxDiscountPct}%",
+        "foot": "clamped, never exceeded"
+      },
+      {
+        "name": "Margin floor",
+        "num": "{minMarginPct}%",
+        "foot": "orders below are rejected"
+      },
+      {
+        "name": "Units / order",
+        "num": "{maxUnitsPerOrder}",
+        "foot": "per-order quantity limit"
+      },
+      {
+        "name": "Approval @ risk",
+        "num": "{requiresApprovalAtRiskScore}",
+        "foot": "or any order ≥ {highValueApprovalPaise}"
+      }
+    ]
+  },
+  "common": {
+    "actions": {
+      "send": "Send",
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "edit": "Edit",
+      "view": "View",
+      "show": "Show",
+      "hide": "Hide",
+      "loading": "Loading...",
+      "error": "Error",
+      "success": "Success",
+      "welcome": "Welcome",
+      "please": "Please",
+      "thankYou": "Thank you"
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email address",
+      "minLength": "Must be at least {min} characters",
+      "maxLength": "Must be no more than {max} characters"
+    }
+  }
+}

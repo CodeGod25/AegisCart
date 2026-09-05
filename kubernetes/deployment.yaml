@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aegiscart-deployment
+  labels:
+    app: aegiscart
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aegiscart
+  template:
+    metadata:
+      labels:
+        app: aegiscart
+    spec:
+      containers:
+      - name: aegiscart
+        image: aegiscart:latest # Replace with your image repository and tag
+        ports:
+        - containerPort: 4000
+        envFrom:
+        - secretRef:
+            name: aegiscart-secret
+        volumeMounts:
+        - name: data
+          mountPath: /app/data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: aegiscart-data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aegiscart-service
+spec:
+  selector:
+    app: aegiscart
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4000
+  type: ClusterIP

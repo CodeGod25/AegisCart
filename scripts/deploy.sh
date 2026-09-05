@@ -1,0 +1,42 @@
+#!/bin/bash
+
+echo "Deployment instructions for AegisCart"
+echo "===================================="
+
+echo ""
+echo "1. Deploying with Docker (using docker-compose):"
+echo "   - Make sure Docker and docker-compose are installed."
+echo "   - Copy .env.example to .env and fill in the required environment variables."
+echo "   - Run: docker-compose up --build"
+echo "   - The frontend will be available at http://localhost:3000"
+echo "   - The backend API will be available at http://localhost:4000"
+echo ""
+
+echo "2. Deploying frontend to Vercel (recommended for Next.js):"
+echo "   - Install Vercel CLI: npm i -g vercel"
+echo "   - Run: vercel login"
+echo "   - From the frontend directory: vercel"
+echo "   - Follow the prompts to link to a GitHub repository (if you pushed to GitHub)."
+echo ""
+
+echo "3. Deploying backend to a Node.js hosting service:"
+echo "   - Options: Render, Fly.io, AWS Elastic Beanstalk, Google Cloud Run, etc."
+echo "   - General steps:"
+echo "     a. Push the code to GitHub (if not already)."
+echo "     b. In your hosting provider, create a new service from the GitHub repo."
+echo "     c. Set the build command to: npm run build"
+echo "     d. Set the start command to: npm start"
+echo "     e. Set the environment variables (from .env)."
+echo "     f. Deploy!"
+echo ""
+
+echo "4. Environment variables:"
+echo "   - Copy .env.example to .env and fill in the values."
+echo "   - Required variables typically include:"
+echo "     - DATABASE_URL (if using a database)"
+echo "     - Any API keys for external services (like Razorpay)"
+echo "     - PORT (for backend, defaults to 4000)"
+echo "     - NEXT_PUBLIC_* variables for frontend (if any)"
+echo ""
+
+echo "Note: For production, ensure you set NODE_ENV=production and use a proper database."

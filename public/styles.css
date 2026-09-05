@@ -1,0 +1,149 @@
+@import url("./styles.legacy.bak.css");
+
+/* =====================================================================
+   AegisCart — Agentic Commerce Control Console
+   Design language: "instrument of record".
+   A settlement/clearing terminal, not a marketing dashboard. Precise,
+   quiet, dense, legible. One authority ink (Prussian steel-blue); a
+   disciplined money-state palette (cleared / held / refused); tabular
+   monospace for every rupee, id and timestamp. No glow, no gradient
+   text, no shimmer — boldness is spent only on the audit spine + seals.
+
+   Contract with app.js (do not remove): the script writes classes and
+   reads these custom properties directly, so they MUST stay defined:
+     colours  --ok --warn --bad --paper --muted
+     agents   --merchant --buyer --human
+   ===================================================================== */
+
+ /* ── Tokens: light (primary) ────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+
+  /* spacing scale - refined for better proportions and consistency */
+  --sp-0: 1px;
+  --sp-1: 3px;   --sp-2: 5px;   --sp-3: 8px;   --sp-4: 12px;
+  --sp-5: 16px;  --sp-6: 20px;  --sp-7: 24px;  --sp-8: 28px;
+  --sp-9: 32px;  --sp-10: 36px; --sp-11: 44px; --sp-12: 52px;
+  --sp-13: 60px; --sp-14: 72px; --sp-15: 88px;
+
+  /* surfaces — refined for better depth */
+  --bg: #eef1f4;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --surface-3: #f1f5f9;
+  --sunken: #e6eaee;
+
+  /* ink ramp — refined for better readability */
+  --ink: #0f172a;
+  --ink-2: #475569;
+  --ink-3: #64748b;
+  --ink-4: #94a3b8;
+
+  /* hairlines */
+  --line: #e2e8f0;
+  --line-2: #f1f5f9;
+  --line-3: #e5e7eb;
+
+  /* authority — refined Prussian steel-blue */
+  --brand: #1e293b;
+  --brand-strong: #0f172a;
+  --brand-fg: #ffffff;
+  --brand-tint: rgba(30, 41, 59, 0.05);
+  --brand-line: rgba(30, 41, 59, 0.15);
+  --brand-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+
+  /* money-state semantics - enhanced for better accessibility */
+  --ok: #059669;   --ok-tint: rgba(5, 150, 105, 0.08);   --ok-line: rgba(5, 150, 105, 0.25);
+  --ok-focus: rgba(5, 150, 105, 0.15);
+  --warn: #d97706; --warn-tint: rgba(217, 119, 6, 0.08); --warn-line: rgba(217, 119, 6, 0.25);
+  --warn-focus: rgba(217, 119, 6, 0.15);
+  --bad: #dc2626;  --bad-tint: rgba(220, 38, 38, 0.08);  --bad-line: rgba(220, 38, 38, 0.25);
+  --bad-focus: rgba(220, 38, 38, 0.15);
+
+  /* agent triad - refined for better distinction */
+  --merchant: #3b82f6;
+  --merchant-focus: rgba(59, 130, 246, 0.15);
+  --buyer: #0891b2;
+  --buyer-focus: rgba(8, 145, 178, 0.15);
+  --human: #7c2d12;
+  --human-focus: rgba(124, 45, 18, 0.15);
+
+  /* app.js aliases: default action-type label + inline muted text */
+  --paper: var(--ink-2);
+  --muted: var(--ink-2);
+
+  /* type roles - refined for better hierarchy */
+  --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, "JetBrains Mono", monospace;
+
+  /* radii - refined for better visual balance */
+  --r-none: 0px;
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 8px;
+  --r-xl: 12px;
+  --r-2xl: 16px;
+  --r-full: 999px;
+
+  /* shadows - enhanced for better depth perception */
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+  --shadow-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-4: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+
+  /* motion */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --fast: 0.1s;
+  --normal: 0.15s;
+  --slow: 0.3s;
+  --scroll: #cbd5e1;
+
+  /* transitions */
+  --transition-short: 150ms var(--ease);
+  --transition-normal: 200ms var(--ease);
+  --transition-long: 300ms var(--ease);
+}
+
+/* ── Tokens: dark companion ─────────────────────────────────────────── */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0c0f14;
+  --surface: #12161d;
+  --surface-2: #171c25;
+  --sunken: #0a0d12;
+
+  --ink: #e9edf2;
+  --ink-2: #9aa4b2;
+  --ink-3: #5f6a79;
+
+  --line: #232a34;
+  --line-2: #1a2028;
+
+  --brand: #4d8cbf;
+  --brand-strong: #6ba3d0;
+  --brand-fg: #0a0d12;
+  --brand-tint: rgba(77, 140, 191, 0.12);
+  --brand-line: rgba(77, 140, 191, 0.30);
+
+  --ok: #43b98a;   --ok-tint: rgba(67, 185, 138, 0.12);  --ok-line: rgba(67, 185, 138, 0.28);
+  --warn: #d3a24a; --warn-tint: rgba(211, 162, 74, 0.12); --warn-line: rgba(211, 162, 74, 0.30);
+  --bad: #d9736c;  --bad-tint: rgba(217, 115, 108, 0.12); --bad-line: rgba(217, 115, 108, 0.30);
+
+  --merchant: #4d8cbf;
+  --buyer: #3fb3ba;
+  --human: #c07aa3;
+
+  --paper: var(--ink-2);
+  --muted: var(--ink-2);
+
+  --shadow-1: none;
+  --shadow-2: 0 2px 10px rgba(0, 0, 0, 0.45);
+  --shadow-3: 0 16px 40px rgba(0, 0, 0, 0.6);
+  --scroll: #2b333f;
+}

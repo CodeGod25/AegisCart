@@ -1,0 +1,25 @@
+node_modules
+npm-debug.log
+Dockerfile
+.dockerignore
+.git
+.gitignore
+.env
+.env.example
+README.md
+tests
+coverage
+.dist
+.temp
+.local
+npmrc
+# TypeScript build artifacts
+tsconfig.tsbuildinfo
+# Logs
+logs
+*.log
+# Runtime data
+data
+# Misc
+.gitkeep
+EOF

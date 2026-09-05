@@ -1,0 +1,136 @@
+{
+  "nav": {
+    "features": "Funktionen",
+    "docs": "Dokumentation",
+    "pricing": "Preise"
+  },
+  "header": {
+    "title": "AegisCart",
+    "subtitle": "Richtlinienbasierter Agentenhandel"
+  },
+  "hero": {
+    "badge": "VERTRAUENSCHICHT FÜR AGENTENHANDEL",
+    "title": "Wandeln Sie KI-Agenten in Vertrauenswürdige Kunden",
+    "description": "AegisCart bietet die deterministische Vertrauensschicht für profitablen Agenten-zu-Agenten-Handel. Jede Geldentscheidung wird von Richtlinien behandelt, nicht von KI—was sichere, erklärbare Transaktionen zwischen autonomen Käufern und Händlern ermöglicht.",
+    "seeDemo": "Demo sehen",
+    "viewDocs": "Dokumentation sehen",
+    "trustList": {
+      "deterministicPricing": "Deterministische Preisgestaltung",
+      "cryptographicallySecure": "Kryptografische Sicherheit",
+      "humanInTheLoop": "Mensch-im-Loop"
+    }
+  },
+  "howItWorks": {
+    "title": "Wie AegisCart funktioniert",
+    "items": [
+      {
+        "title": "KI übernimmt die Kommunikation",
+        "description": "Die natürliche Sprachverarbeitung versteht die Kundenabsicht und verhandelt Bedingungen—ABER nur für Diskussionen, nie für Geldentscheidungen."
+      },
+      {
+        "title": "Richtlinien-Engine setzt Regeln durch",
+        "description": "Deterministische Kontrollen setzen Rabattgrenzen, Mindestmargen, Mengenzahlbeschränkungen und Genehmigungsschwellen durch."
+      },
+      {
+        "title": "Menschliche Genehmigung bei Bedarf",
+        "description": "Risikotransaktionen werden zur expliziten Prüfung zurückgehalten—keine automatischen Überschreibungen. Hochwertige Aufträge benötigen Händlerzustimmung."
+      }
+    ]
+  },
+  "values": {
+    "title": "Warum Händler AegisCart wählen",
+    "items": [
+      {
+        "title": "Umsatz sicher steigern",
+        "description": "Ermöglichen Sie KI-gestützte Verkaufsgespräche bei gleichzeitigem Schutz Ihrer Margen durch automatisierte Richtliniendurchsetzung."
+      },
+      {
+        "title": "Betrug und Missbrauch beseitigen",
+        "description": "Kryptografisch signierte Angebote verhindern Manipulation und Wiederholungsangriffe. Jede Transaktion ist nachvollziehbar und überprüfbar."
+      },
+      {
+        "title": "Erfüllung der Compliance-Anforderungen",
+        "description": "Automatisierte Audit-Trails mit erklärbaren Entscheidungen erfüllen regulatorische Anforderungen für KI-Governance und Finanzkontrollen."
+      },
+      {
+        "title": "Mensch-im-Loop-Steuerung",
+        "description": "Konfigurierbare Genehmigungsworkflows stellen sicher, dass hochriskante Transaktionen eine menschliche Prüfung erhalten, bevor Geldüberweisungen erfolgen."
+      }
+    ],
+    "cta": "Konsole erleben"
+  },
+  "foundations": {
+    "title": "Auf deterministischen Grundlagen aufgebaut",
+    "items": [
+      {
+        "title": "Mathematische Präzision",
+        "description": "Richtlinien, Preisgestaltung, Signaturen und Idempotenz sind reine mathematische Funktionen. Keine KI-Beteiligung bei Geldentscheidungen."
+      },
+      {
+        "title": "Kryptografische Sicherheit",
+        "description": "HMAC-SHA256-signierte Angebote und Mandate verhindern Manipulation, Wiederholungsangriffe und unbefugte Änderungen."
+      },
+      {
+        "title": "Vollständige Transparenz",
+        "description": "Ein append-only Ledger mit Live-Event-Stream bietet Echtzeit-Prüfbarkeit jeder Transaktion und Entscheidung."
+      },
+      {
+        "title": "Erklärbare KI",
+        "description": "Das LLM berührt nur die Sprache. Es entscheidet niemals über eine Zahl, die Geld berührt; jede Aktion hat einen verfolgbaren Grundcode."
+      }
+    ]
+  },
+  "ctaSection cta": {
+    "title": "Bereit für vertrauenswürdigen Agentenhandel?",
+    "description": "Schließen Sie sich Händlern an, die ihre Einnahmen sicher steigern mit politikbasierten Transaktionen, die das Risiko eliminieren und autonomen Handel ermöglichen.",
+    "startTrial": "Kostenlose Testversion starten",
+    "talkSales": "Mit Vertrieb sprechen"
+  },
+  "footer": {
+    "company": "Unternehmen",
+    "product": "Produkt",
+    "resources": "Ressourcen",
+    "legal": "Rechtliches",
+    "about": "Über Uns",
+    "team": "Team",
+    "careers": "Karrieren",
+    "documentation": "Dokumentation",
+    "apiReference": "API-Referenz",
+    "guides": "Leitfäden",
+    "terms": "Bedingungen",
+    "privacy": "Datenschutz",
+    "security": "Sicherheit",
+    "compliance": "Compliance"
+  },
+  "console": {
+    "agentTheater": "Agenten-Theater",
+    "auditLedger": "Audit-Ledger",
+    "operationsRail": "Operations-Schiene",
+    "backToOverview": "Zurück zur Übersicht",
+    "resetDemo": "Demo zurücksetzen",
+    "toggleTheme": "Theme umschalten",
+    "llmStatus": "LLM · prüfung...",
+    "decisionTrail": {
+      "intent": "Absicht",
+      "policy": "Richtlinie",
+      "approval": "Genehmigung",
+      "offer": "Angebot",
+      "payment": "Zahlung",
+      "ledger": "Ledger"
+    }
+  },
+  "ledger": {
+    "auditLedger": "Audit-Ledger",
+    "filterPlaceholder": "Ereignisse filtern",
+    "clearLedger": "Ledger löschen",
+    "connected": "Verbunden",
+    "disconnected": "Getrennt",
+    "event": "Ereignis",
+    "events": "Ereignisse"
+  },
+  "composer": {
+    "placeholder": "Nachricht an den Händler-Agent…",
+    "ariaLabel": "Nachricht an den Händler-Agent",
+    "send": "Senden"
+  }
+}

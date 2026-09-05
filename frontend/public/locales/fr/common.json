@@ -1,0 +1,136 @@
+{
+  "nav": {
+    "features": "Fonctionnalités",
+    "docs": "Documentation",
+    "pricing": "Tarifs"
+  },
+  "header": {
+    "title": "AegisCart",
+    "subtitle": "Commerce agent basé sur les politiques"
+  },
+  "hero": {
+    "badge": "COUCHE DE CONFIANCE POUR LE COMMERCE D'AGENTS",
+    "title": "Transformez les Agents IA en Clients de Confiance",
+    "description": "AegisCart fournit la couche de confiance déterministe pour le commerce agent-à-agent rentable. Chaque décision financière est gérée par politique, pas par IA—permettant des transactions sûres et explicables entre acheteurs autonomes et marchands.",
+    "seeDemo": "Voir la Démo",
+    "viewDocs": "Voir la Documentation",
+    "trustList": {
+      "deterministicPricing": "Tarification Déterministe",
+      "cryptographicallySecure": "Sécurité Cryptographique",
+      "humanInTheLoop": "Humain-dans-la-Boucle"
+    }
+  },
+  "howItWorks": {
+    "title": "Comment Fonctionne AegisCart",
+    "items": [
+      {
+        "title": "L'IA Gère la Conversation",
+        "description": "Le traitement du langage naturel comprend l'intention du client et négocie les termes—MAIS uniquement pour la discussion, jamais pour les décisions financières."
+      },
+      {
+        "title": "Le Moteur de Politiques Applique les Règles",
+        "description": "Les contrôles déterministes appliquent les plafonds de remise, les marges minimales, les limites de quantité et les seuils d'approbation."
+      },
+      {
+        "title": "Approbation Humaine Lorsque Nécessaire",
+        "description": "Les transactions à risque sont retenues pour examen explicite—pas d'annulations automatiques. Les commandes de haute valeur nécessitent le consentement du marchand."
+      }
+    ]
+  },
+  "values": {
+    "title": "Pourquoi les Marchands Choissisent AegisCart",
+    "items": [
+      {
+        "title": "Augmenter les Revenus en Toute Sécurité",
+        "description": "Permettez les conversations de vente pilotées par l'IA tout en protégeant vos marges grâce à l'application automatisée des politiques."
+      },
+      {
+        "title": "Éliminer la Fraude et l'Abus",
+        "description": "Les offres signées cryptographiquement empêchent la falsification et les attaques de rejeu. Chaque transaction est traçable et vérifiable."
+      },
+      {
+        "title": "Respecter les Exigences de Conformité",
+        "description": "Les pistes d'audit automatisées avec des décisions explicables satisfont aux exigences réglementaires pour la gouvernance de l'IA et les contrôles financiers."
+      },
+      {
+        "title": "Contrôle Humain-dans-la-Boucle",
+        "description": "Les flux de travail d'approbation configurables garantissent que les transactions à haut risque reçoivent une révision humaine avant le transfert des fonds."
+      }
+    ],
+    "cta": "Expérimentez la Console"
+  },
+  "foundations": {
+    "title": "Construit sur des Fondements Déterministes",
+    "items": [
+      {
+        "title": "Précision Mathématique",
+        "description": "Les politiques, prix, signatures et idempotence sont des fonctions mathématiques pures. Aucune implication de l'IA dans les décisions financières."
+      },
+      {
+        "title": "Sécurité Cryptographique",
+        "description": "Les offres et mandats signés HMAC-SHA256 empêchent la falsification, les attaques de rejeu et les modifications non autorisées."
+      },
+      {
+        "title": "Visibilité Complète",
+        "description": "Un grand livre en ajout-seul avec un flux d'événements en temps réel fournit une vérifiabilité en temps réel de chaque transaction et décision."
+      },
+      {
+        "title": "IA Explicable",
+        "description": "Le LLM ne touche qu'au langage. Il ne décide jamais d'un nombre qui touche l'argent ; chaque action possède un code de raison traçable."
+      }
+    ]
+  },
+  "ctaSection cta": {
+    "title": "Prêt à Activer le Commerce d'Agent de Confiance ?",
+    "description": "Rejoignez les marchands qui augmentent déjà leurs revenus en toute sécurité grâce à des transactions liées à des politiques qui éliminent le risque tout en permettant le commerce autonome.",
+    "startTrial": "Commencer l'Essai Gratuit",
+    "talkSales": "Parler aux Ventes"
+  },
+  "footer": {
+    "company": "Entreprise",
+    "product": "Produit",
+    "resources": "Ressources",
+    "legal": "Légal",
+    "about": "À Propos",
+    "team": "Équipe",
+    "careers": "Carrières",
+    "documentation": "Documentation",
+    "apiReference": "Référence API",
+    "guides": "Guides",
+    "terms": "Conditions",
+    "privacy": "Confidentialité",
+    "security": "Sécurité",
+    "compliance": "Conformité"
+  },
+  "console": {
+    "agentTheater": "Théâtre des Agents",
+    "auditLedger": "Grand Livre d'Audit",
+    "operationsRail": "Rail des Opérations",
+    "backToOverview": "Retour à l'Aperçu",
+    "resetDemo": "Réinitialiser la démonstration",
+    "toggleTheme": "Basculer le thème",
+    "llmStatus": "LLM · vérification...",
+    "decisionTrail": {
+      "intent": "Intention",
+      "policy": "Politique",
+      "approval": "Approbation",
+      "offer": "Offre",
+      "payment": "Paiement",
+      "ledger": "Grand Livre"
+    }
+  },
+  "ledger": {
+    "auditLedger": "Grand livre d'audit",
+    "filterPlaceholder": "Filtrer les événements",
+    "clearLedger": "Effacer le grand livre",
+    "connected": "Connecté",
+    "disconnected": "Déconnecté",
+    "event": "événement",
+    "events": "événements"
+  },
+  "composer": {
+    "placeholder": "Messagez l'agent marchand…",
+    "ariaLabel": "Messagez l'agent marchand",
+    "send": "Envoyer"
+  }
+}

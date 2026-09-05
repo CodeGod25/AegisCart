@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AegisCart</title>
+    <meta
+      name="description"
+      content="AegisCart enables secure agent-to-agent commerce with policy-bound transactions, cryptographic guarantees, and full auditability."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  <!-- Chart.js for money flow visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+      // Set the theme before first paint to avoid a flash. Stored choice wins;
+      // otherwise follow the OS preference.
+      (function () {
+        try {
+          var stored = localStorage.getItem("aegis-theme");
+          var dark =
+            stored === "dark" ||
+            (!stored &&
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.setAttribute("data-theme", "dark");
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="shell">
+      <div class="frame">
+        <!-- ===================== command bar ===================== -->
+        <div class="command">
+          <div class="brand">
+            <div class="mark" aria-hidden="true">
+              <img src="/favicon.svg" alt="" width="24" height="24" aria-hidden="true" />
+            </div>
+            <div>
+              <h1>AegisCart</h1>
+            </div>
+          </div>
+          <div class="spacer"></div>
+          <div class="badges">
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle light / dark">
+              <span class="ti-icon" aria-hidden="true"></span>
+              <span class="ti-label">Dark</span>
+            </button>
+            <span class="status-chip note" title="Payments run against Razorpay test mode — no real money moves">
+              <span class="dot"></span><span class="txt">test</span>
+            </span>
+          </div>
+          <div class="actions">
+            <button id="run-guided" class="btn primary" type="button">
+              Run Guided Demo
+            </button>
+            <button id="run-buyer-top" class="btn buyer" type="button">
+              Run Autonomous Buyer
+            </button>
+            <button id="reset-all" class="btn ghost" type="button" title="Clear ledger + simulation">
+              Reset
+            </button>
+          </div>
+        </div>
+        <!-- ===================== landing ===================== -->
+        <section id="landing" class="landing" aria-label="Overview">
+          <div class="landing-inner">
+            <!-- Header: Clear value proposition for merchants -->
+            <header class="landing-header">
+              <div class="eyebrow">Agentic Commerce Platform</div>
+              <h1 class="landing-title">Trustworthy AI-to-Human Commerce</h1>
+              <p class="landing-subtitle">Enable autonomous AI agents to shop safely with deterministic policy controls that protect your margins and eliminate risk.</p>
+            </header>
+
+            <!-- Enhanced Problem/Solution framework with immediate value visualization -->
+            <div class="hero-section">
+              <div class="hero-content">
+                <h2>The Challenge: Uncontrolled AI Shopping</h2>
+                <p class="hero-desc">When AI agents negotiate purchases autonomously, they can request unlimited discounts, make unauthorized purchases, and create compliance risks - putting your revenue at risk.</p>
+
+                <div class="value-proposition">
+                  <h2>The Solution: Policy-Bounded AI Commerce</h2>
+                  <div class="value-grid">
+                    <div class="value-item">
+                      <div class="value-icon">🎯</div>
+                      <div>
+                        <h3>Policy-First Control</h3>
+                        <p>Set clear boundaries for discounts, quantities, and approvals that AI cannot override.</p>
+                      </div>
+                    </div>
+                    <div class="value-item">
+                      <div class="value-icon">🔐</div>
+                      <div>
+                        <h3>Cryptographic Security</h3>
+                        <p>Every offer is tamper-proof signed and verified before processing.</p>
+                      </div>
+                    </div>
+                    <div class="value-item">
+                      <div class="value-icon">📊</div>
+                      <div>
+                        <h3>Complete Audit Trail</h3>
+                        <p>Every action is recorded in an immutable ledger with explainable reason codes.</p>
+                      </div>
+                    </div>
+                    <div class="value-item">
+                      <div class="value-icon">👥</div>
+                      <div>
+                        <h3>Human-in-the-Loop</h3>
+                        <p>High-risk transactions pause for explicit merchant approval.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Improved visual demonstration -->
+                <div class="hero-visual">
+                  <div class="flow-diagram">
+                    <div class="flow-step">
+                      <div class="flow-icon">🤖</div>
+                      <div class="flow-label">AI Agent Requests</div>
+                      <div class="flow-detail">"I want 10 units at 50% off"</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="flow-icon">⚖️</div>
+                      <div class="flow-label">Policy Engine</div>
+                      <div class="flow-detail">Applies your rules: Max 30% discount → COUNTER-OFFER</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="flow-icon">📝</div>
+                      <div class="flow-label">Signed Offer</div>
+                      <div class="flow-detail">HMAC-SHA256 signed, immutable, time-limited</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step decision-point">
+                      <div class="flow-icon">👤</div>
+                      <div class="flow-label">Approval Gate</div>
+                      <div class="flow-detail">High-value orders require your explicit approval</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="flow-icon">💳</div>
+                      <div class="flow-label">Secure Settlement</div>
+                      <div class="flow-detail">Verified signature triggers payment processing</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="flow-icon">📓</div>
+                      <div class="flow-label">Immutable Audit</div>
+                      <div class="flow-detail">Every action recorded with full traceability</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Enhanced specimen with interactive feel -->
+              <div class="specimen" aria-hidden="true">
+                <div class="spec-card">
+                  <div class="spec-head"><span class="spec-tag">Live Example</span><span class="spec-title">Policy in Action</span></div>
+                  <div class="spec-body">
+                    <div class="spec-row">
+                      <span class="spec-label">Agent Request:</span>
+                      <span class="spec-value">"10 Wireless Earbuds at 50% off"</span>
+                    </div>
+                    <div class="spec-row">
+                      <span class="spec-label">Policy Check:</span>
+                      <span class="spec-value">Max 30% discount + 5 unit limit → COUNTER-OFFER</span>
+                    </div>
+                    <div class="spec-row">
+                      <span class="spec-label">Final Offer:</span>
+                      <span class="spec-value"><strong>5 × Earbuds @ 30% off</strong></span>
+                    </div>
+                    <div class="spec-row">
+                      <span class="spec-label">Original Price:</span>
+                      <span class="spec-value">₹29,995</span>
+                    </div>
+                    <div class="spec-row">
+                      <span class="spec-label">Offer Price:</span>
+                      <span class="spec-value"><b>₹20,997</b></span>
+                    </div>
+                    <div class="spec-row">
+                      <span class="spec-label">Your Protection:</span>
+                      <span class="spec-value">₹8,998 saved + 30% margin maintained</span>
+                    </div>
+                    <div class="spec-row approval-flag">
+                      <span class="spec-label">Status:</span>
+                      <span class="spec-value">
+                        <span class="rc ok">OFFER_VALID</span>
+                        <span class="rc warn">APPROVAL_REQUIRED</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="spec-footer">
+                    <div class="spec-seal">Offer ID: 8f2b·d4e1·sig</div>
+                    <div class="spec-timestamp">Expires in 15 minutes</div>
+                    <div class="spec-insight">
+                      See how your policies automatically protect margins while enabling safe AI commerce.
+                    </div>
+                  </div>
+                </div>
+                <p class="spec-caption">
+                  Watch how uncontrolled discount requests become policy-compliant offers that protect your business.
+                </p>
+              </div>
+            </div>
+
+            <!-- Key benefits for merchants -->
+            <div class="benefits-section">
+              <h2>Why Merchants Choose AegisCart</h2>
+              <div class="benefits-grid">
+                <div class="benefit-card">
+                  <div class="benefit-icon">📈</div>
+                  <h3>Increase Revenue Safely</h3>
+                  <p>Enable AI-driven sales conversations while protecting your margins with automated policy enforcement.</p>
+                </div>
+                <div class="benefit-card">
+                  <div class="benefit-icon">🛡️</div>
+                  <h3>Eliminate Fraud & Abuse</h3>
+                  <p>Cryptographically signed offers prevent tampering and replay attacks. Every transaction is traceable and verifiable.</p>
+                </div>
+                <div class="benefit-card">
+                  <div class="benefit-icon">⚖️</div>
+                  <h3>Meet Compliance Requirements</h3>
+                  <p>Automated audit trails with explainable decisions satisfy regulatory requirements for AI governance and financial controls.</p>
+                </div>
+                <div class="benefit-card">
+                  <div class="benefit-icon">🔄</div>
+                  <h3>Work with Any Agent Protocol</h3>
+                  <p>Implements shared primitives of UAP, ACP, AP2, and x402 - providing trust without locking to a single standard.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Trust and validation -->
+            <div class="validation-section">
+              <h2>Built for Trustworthy Agent Commerce</h2>
+              <div class="validation-grid">
+                <div class="validation-item">
+                  <div class="validation-icon">🧮</div>
+                  <div class="validation-content">
+                    <h4>Deterministic Foundation</h4>
+                    <p>Policy, pricing, signatures & idempotency - all implemented as pure mathematical functions. Zero AI involvement in money decisions.</p>
+                  </div>
+                </div>
+                <div class="validation-item">
+                  <div class="validation-icon">🔒</div>
+                  <div class="validation-content">
+                    <h4>Cryptographic Security</h4>
+                    <p>HMAC-SHA256 signed offers and mandates prevent tampering, replay attacks, and unauthorized modifications.</p>
+                  </div>
+                </div>
+                <div class="validation-item">
+                  <div class="validation-icon">👁️</div>
+                  <div class="validation-content">
+                    <h4>Complete Visibility</h4>
+                    <p>Append-only ledger with live event stream provides real-time auditability of every transaction and decision.</p>
+                  </div>
+                </div>
+                <div class="validation-item">
+                  <div class="validation-icon">👥</div>
+                  <div class="validation-content">
+                    <h4>Human-in-the-Loop Control</h4>
+                    <p>Configurable approval workflows ensure high-risk transactions get human review before funds are transferred.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Call to action -->
+            <div class="landing-cta">
+              <button class="btn primary lg" id="enter-demo" type="button">See It in Action</button>
+              <button class="btn lg" id="enter-console" type="button">Explore the Full Console</button>
+            </div>
+          </div>
+          <aside class="specimen" aria-hidden="true">
+            <div class="spec-card">
+              <div class="spec-head"><span class="spec-tag">Live Example</span><span class="spec-title">Policy-Bounded Transaction</span></div>
+              <div class="spec-body">
+                <div class="spec-row">
+                  <span class="spec-label">Customer Request:</span>
+                  <span class="spec-value">"5 Mechanical Keyboards at 40% off"</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Policy Check:</span>
+                  <span class="spec-value">Max 20% discount → COUNTER-OFFER</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Final Offer:</span>
+                  <span class="spec-value"><strong>5 × Keyboard @ 20% off</strong></span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Original Price:</span>
+                  <span class="spec-value">₹44,995</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Offer Price:</span>
+                  <span class="spec-value"><b>₹35,996</b></span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Customer Savings:</span>
+                  <span class="spec-value">₹8,999 (20%)</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Merchant Protection:</span>
+                  <span class="spec-value">20% margin maintained</span>
+                </div>
+              </div>
+              <div class="spec-footer">
+                <div class="spec-seal">Offer ID: a3f9·c21e·sig</div>
+                <div class="spec-timestamp">Expires in 15 minutes</div>
+                <div class="spec-status">
+                  <span class="rc ok">OFFER_VALID</span>
+                  <span class="rc warn">REQUIRES_APPROVAL</span> <!-- High-value orders need human review -->
+                </div>
+              </div>
+            </div>
+            <p class="spec-caption">
+              See how an unsafe discount request becomes a policy-compliant, cryptographically signed offer that protects your margins.
+            </p>
+          </aside>
+        </section>
+
+        <!-- ===================== console (revealed) ===================== -->
+        <section id="console" class="console-view" aria-label="Live console">
+          <div class="console-bar">
+            <button class="back-link" id="back-landing" type="button">← Overview</button>
+            <div id="demo-status" class="demo-status" role="status" aria-live="polite"></div>
+            <div class="flow-strip"><div class="flow" id="flow"></div></div>
+          </div>
+
+
+
+          <!-- ===================== workspace: one viewport, three live panes ===================== -->
+          <div class="workspace">
+            <!-- Agent theater -->
+            <section class="panel theater" aria-label="Agent conversation theater">
+              <header>
+                <div class="panel-header-content">
+                  <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                  <div>
+                    <h2>Terminal</h2>
+                    <span class="sub">Interactive prompt</span>
+                  </div>
+                </div>
+                <span class="hspace"></span>
+              </header>
+              <div class="tabs" role="tablist" aria-label="Conversation mode">
+                <button
+                  class="tab"
+                  id="tab-chat"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="pane-chat"
+                >
+                  <span class="swatch" style="background: var(--merchant)"></span>
+                  Chat
+                </button>
+                <button
+                  class="tab"
+                  id="tab-a2a"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="pane-a2a"
+                >
+                  <span class="swatch" style="background: var(--buyer)"></span>
+                  A2A
+                </button>
+              </div>
+
+              <!-- Chat pane -->
+              <div
+                class="pane active"
+                id="pane-chat"
+                role="tabpanel"
+                aria-labelledby="tab-chat"
+              >
+                <div class="log" id="chat-log">
+                  <div class="empty">
+                    <div class="pulse-ring"></div>
+                    <div class="big">Ready for conversation</div>
+                    <p>Ask for quotes, negotiate prices, or set spending limits. The agent handles conversation while our policy engine ensures every transaction follows your rules.</p>
+                  </div>
+                </div>
+                <div class="chip-row" id="chat-suggest">
+                  <button class="suggest" type="button" data-msg="What do you sell?">
+                    what do you sell?
+                  </button>
+                  <button class="suggest" type="button" data-msg="Quote 2 keyboards at 10% off">
+                    quote 2 keyboards @ 10%
+                  </button>
+                  <button
+                    class="suggest"
+                    type="button"
+                    data-msg="I want 5 mice at 30% off"
+                  >
+                    push 5 mice @ 30% (trips gate)
+                  </button>
+                  <button
+                    class="suggest"
+                    type="button"
+                    data-msg="Set a budget of 5000"
+                  >
+                    set a ₹5,000 spending limit
+                  </button>
+                </div>
+                <form class="composer" id="chat-form" autocomplete="off">
+                  <input
+                    id="chat-input"
+                    name="message"
+                    placeholder="Message the merchant agent…"
+                    aria-label="Message the merchant agent"
+                  />
+                  <button class="btn primary" type="submit">Send</button>
+                </form>
+                <p class="meta-line" id="chat-meta"></p>
+              </div>
+
+              <!-- A2A pane -->
+              <div
+                class="pane"
+                id="pane-a2a"
+                role="tabpanel"
+                aria-labelledby="tab-a2a"
+                hidden
+              >
+                <div class="a2a-head">
+                  Watch an autonomous AI buyer negotiate with this merchant agent within your policy boundaries.
+                  <div class="run-row">
+                    <button id="run-buyer" class="btn buyer" type="button">
+                      Run buyer agent
+                    </button>
+                    <span class="hint" id="a2a-hint">deterministic · no LLM in the buyer loop</span>
+                  </div>
+                </div>
+                <div class="outcome" id="a2a-outcome"></div>
+                <div class="log" id="a2a-log">
+                  <div class="empty">
+                    <div class="pulse-ring"></div>
+                    <div class="big">Ready for negotiation</div>
+                    <p>Click "Run buyer agent" to see how an AI buyer interacts with this merchant while respecting your policy constraints.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Audit ledger — the receipt tape -->
+            <section class="panel ledger-panel" aria-label="Audit ledger">
+              <header>
+                <div class="panel-header-content">
+                  <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                  <div>
+                    <h2>Audit ledger</h2>
+                    <span class="sub">append-only · live</span>
+                  </div>
+                </div>
+                <span class="hspace"></span>
+                <span class="hint" id="ledger-count">0 events</span>
+                <button class="btn tiny ghost" id="clear-ledger" type="button">Clear</button>
+              </header>
+              <div class="body ledger-body">
+                <div class="ledger" id="ledger" aria-live="polite"></div>
+              </div>
+            </section>
+
+            <!-- Operations rail -->
+            <section class="panel ops-rail" aria-label="Operations">
+              <header>
+                <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <h2>Operations</h2>
+                <span class="sub">Policy · Approvals · Revenue</span>
+                <span class="hspace"></span>
+              </header>
+              <div class="rail-tabs" role="tablist" aria-label="Operations view">
+                <button class="rail-tab" data-rail="policy" aria-selected="true" type="button">Policy Envelope</button>
+                <button class="rail-tab" data-rail="approvals" aria-selected="false" type="button">Approvals</button>
+                <button class="rail-tab" data-rail="revenue" aria-selected="false" type="button">Revenue</button>
+              </div>
+
+              <div class="rail-pane active" data-rail-pane="policy">
+                <div class="rail-body">
+                  <div class="rail-head">
+                    <h3 class="rh-title">Active Policy Constraints</h3>
+                    <span class="hspace"></span>
+                    <span class="sub" id="policy-src">/catalog/capabilities</span>
+                  </div>
+                  <div class="gauges" id="gauges"></div>
+                  <div class="sim-controls">
+                    <button class="btn tiny" id="sim-decline" type="button">Arm payment decline</button>
+                    <button class="btn tiny" id="sim-llm" type="button">Simulate LLM outage</button>
+                    <button class="btn tiny ghost" id="sim-reset" type="button">Clear failures</button>
+                    <div class="sim-state" id="sim-state">No failures armed.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="rail-pane" data-rail-pane="approvals" hidden>
+                <div class="rail-body">
+                  <div class="rail-head">
+                    <h3 class="rh-title">Pending Approvals</h3>
+                    <span class="hspace"></span>
+                    <button class="btn tiny ghost" id="refresh-approvals" type="button">Refresh</button>
+                  </div>
+                  <div class="approvals" id="approvals"></div>
+                </div>
+              </div>
+
+              <div class="rail-pane" data-rail-pane="revenue" hidden>
+                <div class="rail-body">
+                  <div class="rail-head">
+                    <h3 class="rh-title">Financial Metrics</h3>
+                    <span class="hspace"></span>
+                    <button class="btn tiny ghost" id="refresh-metrics" type="button">Refresh</button>
+                  </div>
+                  <div class="metrics" id="metrics"></div>
+                  <div class="subhead">Funnel</div>
+                  <div class="funnel" id="funnel"></div>
+                  <div class="subhead">Revenue by SKU</div>
+                  <div class="persku-controls">
+                    <label for="persku-sort">Sort by:</label>
+                    <select id="persku-sort">
+                      <option value="revenue">Revenue (High to Low)</option>
+                      <option value="units">Units Sold (High to Low)</option>
+                      <option value="name">Product Name (A-Z)</option>
+                    </select>
+                  </div>
+                  <div class="persku" id="persku"></div>
+                  <div class="subhead">Best policy-safe offer</div>
+                  <div class="explorer">
+                    <div class="field"><label for="bo-sku">Product</label><select id="bo-sku"></select></div>
+                    <div class="field"><label for="bo-qty">Quantity</label><input id="bo-qty" type="number" min="1" max="10" value="1" /></div>
+                    <button class="btn tiny" id="bo-run" type="button">Calculate Offer</button>
+                  </div>
+                  <div class="explorer-out" id="bo-out"></div>
+
+                  <!-- Money Flow Visualization -->
+                  <div class="subhead">Money Flow Trends</div>
+                  <div id="money-flow-container" class="chart-container">
+                    <div class="empty" style="text-align: center; padding: var(--sp-6);">
+                      <div class="big">No transaction data yet</div>
+                      <p>Transactions will appear here as you negotiate and settle offers</p>
+                    </div>
+                    <canvas id="money-flow-chart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div><!-- /workspace -->
+
+          <!-- Mobile Bottom Navigation -->
+          <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile View Navigation">
+            <button class="m-tab active" data-target=".theater" type="button">
+              Terminal
+            </button>
+            <button class="m-tab" data-target=".ledger-panel" type="button">
+              Ledger
+            </button>
+            <button class="m-tab" data-target=".ops-rail" type="button">
+              Operations
+            </button>
+          </nav>
+        </section><!-- /console -->
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      // View router: landing ⇄ live console. Isolated from app.js; only toggles
+      // a body class and defers the demo button to app.js's own handler.
+      (function () {
+        function ready(fn) {
+          if (document.readyState !== "loading") fn();
+          else document.addEventListener("DOMContentLoaded", fn);
+        }
+        ready(function () {
+          // theme toggle: flip data-theme on <html>, persist, keep label honest
+          var themeBtn = document.getElementById("theme-toggle");
+          var themeLabel = themeBtn && themeBtn.querySelector(".ti-label");
+          var syncLabel = function () {
+            var dark =
+              document.documentElement.getAttribute("data-theme") === "dark";
+            if (themeLabel) themeLabel.textContent = dark ? "Light" : "Dark";
+          };
+          syncLabel();
+          if (themeBtn)
+            themeBtn.addEventListener("click", function () {
+              var dark =
+                document.documentElement.getAttribute("data-theme") === "dark";
+              if (dark) document.documentElement.removeAttribute("data-theme");
+              else document.documentElement.setAttribute("data-theme", "dark");
+              try {
+                localStorage.setItem("aegis-theme", dark ? "light" : "dark");
+              } catch (e) {}
+              syncLabel();
+            });
+
+          var body = document.body;
+          var show = function () {
+            body.classList.add("show-console");
+            window.scrollTo({ top: 0, behavior: "auto" });
+          };
+          var hide = function () {
+            body.classList.remove("show-console");
+            window.scrollTo({ top: 0, behavior: "auto" });
+          };
+          var enterConsole = document.getElementById("enter-console");
+          var enterDemo = document.getElementById("enter-demo");
+          var back = document.getElementById("back-landing");
+          var runGuided = document.getElementById("run-guided");
+          var runBuyerTop = document.getElementById("run-buyer-top");
+          if (enterConsole) enterConsole.addEventListener("click", show);
+          if (back) back.addEventListener("click", hide);
+          // Guided-demo CTA on the landing: reveal the console, then let
+          // app.js's own click handler on #run-guided drive the demo.
+          if (enterDemo)
+            enterDemo.addEventListener("click", function () {
+              show();
+              if (runGuided) setTimeout(function () { runGuided.click(); }, 60);
+            });
+          // Any console action fired from the top bar should reveal the console.
+          if (runGuided) runGuided.addEventListener("click", show);
+          if (runBuyerTop) runBuyerTop.addEventListener("click", show);
+
+          // Operations rail: policy / approvals / revenue as tabs (one at a
+          // time) so the controls occupy a column, not a second screen.
+          var railTabs = document.querySelectorAll(".rail-tab");
+          var railPanes = document.querySelectorAll(".rail-pane");
+          railTabs.forEach(function (tab) {
+            tab.addEventListener("click", function () {
+              var target = tab.getAttribute("data-rail");
+              railTabs.forEach(function (t) {
+                t.setAttribute("aria-selected", t === tab ? "true" : "false");
+              });
+              railPanes.forEach(function (p) {
+                var on = p.getAttribute("data-rail-pane") === target;
+                p.classList.toggle("active", on);
+                p.hidden = !on;
+              });
+            });
+          });
+
+          // Mobile Bottom Nav logic
+          var mTabs = document.querySelectorAll(".m-tab");
+          if (mTabs.length > 0) {
+            mTabs.forEach(function (tab) {
+              tab.addEventListener("click", function () {
+                var target = tab.getAttribute("data-target");
+                mTabs.forEach(function (t) { t.classList.remove("active"); });
+                tab.classList.add("active");
+
+                // Hide all panels
+                document.querySelector(".theater").style.display = "none";
+                document.querySelector(".ledger-panel").style.display = "none";
+                document.querySelector(".ops-rail").style.display = "none";
+
+                // Show target
+                var targetEl = document.querySelector(target);
+                if (targetEl) targetEl.style.display = "flex";
+              });
+            });
+            // Initial mobile state setup (handled via CSS display: none defaults)
+          }
+        });
+      })();
+    </script>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

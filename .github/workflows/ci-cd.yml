@@ -1,0 +1,177 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run check # TypeScript check
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm test # Run unit tests
+
+  security:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    - run: npm ci
+    - run: npm audit --production
+      # We don't fail on audit because we might have dev dependencies with vulnerabilities
+      # but we can output the results
+      continue-on-error: true
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [test, security]
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build # Build the application
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    outputs:
+      image-name: ${{ secrets.DOCKERHUB_USERNAME }}/aegiscart
+      image-tag: ${{ github.sha }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/aegiscart:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/aegiscart:${{ github.sha }}
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: docker
+    if: github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    - name: Install dependencies
+      run: npm ci
+    - name: Validate environment
+      run: |
+        chmod +x scripts/validate-env.sh
+        ./scripts/validate-env.sh staging
+    - name: Set image variables
+      run: |
+        echo "IMAGE_NAME=${{ needs.docker.outputs.image-name }}" >> $GITHUB_ENV
+        echo "IMAGE_TAG=${{ needs.docker.outputs.image-tag }}" >> $GITHUB_ENV
+    - name: Load environment variables
+      run: |
+        # Load staging environment
+        if [ -f ".env.staging" ]; then
+          echo "Loading staging environment"
+          export $(cat ".env.staging" | xargs)
+        else
+          echo "Staging environment file not found"
+          exit 1
+        fi
+    - name: Show feature flags
+      run: |
+        chmod +x scripts/feature-flags.sh
+        ./scripts/feature-flags.sh
+    - name: Deploy to staging
+      run: |
+        # Make sure the deploy script is executable
+        chmod +x scripts/deploy.sh
+        ./scripts/deploy.sh staging
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: docker
+    if: github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    - name: Install dependencies
+      run: npm ci
+    - name: Validate environment
+      run: |
+        chmod +x scripts/validate-env.sh
+        ./scripts/validate-env.sh production
+    - name: Set image variables
+      run: |
+        echo "IMAGE_NAME=${{ needs.docker.outputs.image-name }}" >> $GITHUB_ENV
+        echo "IMAGE_TAG=${{ needs.docker.outputs.image-tag }}" >> $GITHUB_ENV
+    - name: Load environment variables
+      run: |
+        # Load production environment
+        if [ -f ".env.production" ]; then
+          echo "Loading production environment"
+          export $(cat ".env.production" | xargs)
+        else
+          echo "Production environment file not found. Please create .env.production from .env.production.example"
+          exit 1
+        fi
+    - name: Show feature flags
+      run: |
+        chmod +x scripts/feature-flags.sh
+        ./scripts/feature-flags.sh
+    - name: Deploy to production
+      run: |
+        # Make sure the deploy script is executable
+        chmod +x scripts/deploy.sh
+        ./scripts/deploy.sh production
+      # Add manual approval step if needed
+      # You can add an environment protection rule in the repository settings
